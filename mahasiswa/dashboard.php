@@ -51,7 +51,7 @@ list($tahun_aktif, $semester_aktif) = explode(' ', $ajaran_semester);
 <body>
 
 <div class="navbar">
-    <h3><i class="fas fa-flask"></i> LabInventory Mahasiswa</h3>
+    <h3>LabInventory Mahasiswa</h3>
     <div>
         <span style="margin-right: 15px; font-size: 14px;"><i class="fas fa-user"></i> Mahasiswa</span>
         <a href="../logout.php" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -66,7 +66,7 @@ list($tahun_aktif, $semester_aktif) = explode(' ', $ajaran_semester);
         <div>
             <h2 style="margin: 0 0 10px 0; color: #333;">Selamat Datang!</h2>
             <p style="margin: 0; color: #555; font-size: 16px;">
-                Anda login sebagai: <strong><?= htmlspecialchars($display_kelas) ?></strong><br>
+                Kelas: <strong><?= htmlspecialchars($display_kelas) ?></strong><br>
                 Mata Kuliah: <strong><?= htmlspecialchars($display_matkul) ?></strong>
             </p>
         </div>
@@ -78,13 +78,10 @@ list($tahun_aktif, $semester_aktif) = explode(' ', $ajaran_semester);
             <i class="fas fa-calendar-check"></i>
         </div>
         <div style="flex: 1;">
-            <div style="font-size: 13px; color: #555; margin-bottom: 5px;">Ajaran & Semester Aktif (Sistem)</div>
+            <div style="font-size: 13px; color: #555; margin-bottom: 5px;">Ajaran & Semester Aktif</div>
             <span class="badge badge-blue" style="font-size: 14px; padding: 6px 12px;">
                 <i class="fas fa-calendar"></i> <?= htmlspecialchars($ajaran_semester) ?>
             </span>
-            <div style="font-size: 11px; color: #888; margin-top: 5px;">
-                *Peminjaman akan dicatat pada periode ini.
-            </div>
         </div>
     </div>
 
