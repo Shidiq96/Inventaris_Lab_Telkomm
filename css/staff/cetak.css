@@ -1,0 +1,134 @@
+body { 
+    font-family: 'Arial', sans-serif; 
+    padding: 20px; 
+    background: #f0f0f0; 
+}
+        
+.container { 
+    max-width: 100%; 
+    margin: 0 auto; 
+    background: white; 
+    padding: 20px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+
+/* Judul Halaman */
+.main-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 4px double #000;
+    padding-bottom: 20px;
+}
+
+.main-header h1 {
+    font-size: 28px;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/* Header untuk Setiap Kelompok Barang */
+.group-header {
+    margin-top: 30px;
+    margin-bottom: 0px; /* Margin bawah 0 agar menempel tabel */
+    padding: 10px;
+    background-color: #eee;
+    border-left: 8px solid #000;
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000; /* Tambah border atas agar tertutup rapi */
+    page-break-after: avoid;
+}
+
+.group-title {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #000;
+}
+        
+/* Tabel Style */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-bottom: 30px; /* Jarak antar grup tabel */
+}
+        
+th { 
+    text-align: left; 
+    background-color: #ddd; 
+    border: 2px solid #000; 
+    padding: 10px; 
+    font-size: 14px; 
+    font-weight: 900; 
+    color: #000; 
+}
+        
+td { 
+    border: 1px solid #000; 
+    padding: 10px; 
+    font-size: 14px; 
+    color: #000; 
+}
+
+/* Kolom Kode Unik: Font Monospace & Sangat Tebal */
+.code-bold {
+    font-family: 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* Tombol Print & Kembali */
+.print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.print-btn:hover { 
+    background-color: #333; 
+}
+
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 15px 25px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    z-index: 1000;
+}
+
+.back-btn:hover { 
+    background-color: #5a6268; 
+}
+
+/* PRINT MODE */
+@media print {
+    @page { margin: 1cm; size: A4; }
+    body { background: white; padding: 0; -webkit-print-color-adjust: exact; }
+    .container { box-shadow: none; max-width: 100%; padding: 0; margin: 0; border: none; }
+    .print-btn, .back-btn, .no-print { display: none !important; }
+    .group-header { background-color: #eee !important; border-left: 5px solid #000 !important; border-bottom: 2px solid #000 !important; margin-top: 20px; }
+    th { background-color: #ddd !important;  font-size: 12pt; border: 2px solid #000 !important; }
+    td { font-size: 12pt; border: 1px solid #000 !important; }
+    tr { page-break-inside: avoid; }
+    .group-wrapper { page-break-inside: avoid; }
+}

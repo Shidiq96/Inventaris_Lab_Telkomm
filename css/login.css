@@ -1,0 +1,56 @@
+body { 
+    margin:0; 
+    font-family: 'Segoe UI', sans-serif; 
+    background:linear-gradient(135deg, #1e3c72, #2a5298); 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    height:100vh; 
+}
+
+.box { 
+    background:white; 
+    padding:40px; 
+    width:320px; 
+    border-radius:15px; 
+    box-shadow:0 15px 40px rgba(0,0,0,.4); 
+    text-align:center; 
+}
+
+h2 { 
+    margin: 0 0 10px 0; 
+    color: #333; 
+}
+
+p { 
+    color: #666; 
+    margin-bottom: 25px; 
+}
+
+/* Tombol Style */
+.btn { 
+    display:block; 
+    padding:15px; 
+    margin-top:15px; 
+    text-decoration:none; 
+    color:white; 
+    border-radius:8px; 
+    font-weight:bold; 
+    transition: 0.2s; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    cursor:pointer; 
+}
+
+.btn:hover { 
+    transform: translateY(-2px); 
+}
+
+/* Biru */
+.staff { 
+    background:#0d47a1; 
+} 
+
+/* Hijau */
+.mhs { 
+    background:#2e7d32; 
+}   

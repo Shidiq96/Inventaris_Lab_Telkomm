@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpoffice/phpspreadsheet": "1.30.2",
+        "maennchen/zipstream-php": "2.1",
+        "picqer/php-barcode-generator": "^3.2",
+        "endroid/qr-code": "^6.0"
+    }
+}

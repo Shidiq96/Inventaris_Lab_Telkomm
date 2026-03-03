@@ -1,0 +1,197 @@
+        :root {
+            --primary-color: #0d47a1;
+            --secondary-color: #2e7d32;
+            --accent-color: #f57f17;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #ddd;
+            --error-color: #d32f2f;
+            --success-color: #388e3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVBAR --- */
+.navbar { 
+    background: #667eea; 
+    color: white; 
+    padding: 15px 30px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+        .navbar h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .navbar .btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .navbar .btn:hover { background: rgba(255,255,255,0.4); }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+        }
+
+        /* --- CARD --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        
+        .info-peminjam {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        /* --- ALERTS --- */
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert-success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .alert-error { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+
+        /* --- FORM & INPUTS --- */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: #555; }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box; /* Penting agar padding tidak merusak layout */
+            font-size: 1rem;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1); }
+
+        /* --- KTM UPLOAD SECTION (INTERACTIVE) --- */
+        .ktm-upload-area {
+            border: 2px dashed var(--primary-color);
+            background-color: #f8fbff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: background 0.3s;
+            position: relative;
+        }
+        .ktm-upload-area:hover { background-color: #eef5ff; }
+        
+        .upload-label {
+            display: block;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: bold;
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--primary-color);
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        .upload-label:hover { background: var(--primary-color); color: white; }
+        
+        #foto_ktm { display: none; } /* Hide standard file input */
+        
+        .preview-container {
+            margin-top: 15px;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .preview-image {
+            max-width: 300px;
+            max-height: 200px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            border-radius: 5px;
+            object-fit: contain;
+        }
+        .remove-file-btn {
+            color: var(--error-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+
+        /* --- TABLE --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; color: #555; font-weight: 600; font-size: 0.9rem; }
+        
+        .input-jumlah { width: 60px; padding: 5px; text-align: center; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .badge-green { background: #e8f5e9; color: #2e7d32; }
+        .badge-red { background: #ffebee; color: #c62828; }
+
+        /* --- CAPTCHA & BUTTON --- */
+        .captcha-box {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            user-select: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover { background-color: #1b5e20; }
+        .btn-primary:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 10px; text-align: center; }
+            .info-peminjam { text-align: center; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 5px; padding: 10px; }
+            td { border: none; position: relative; padding-left: 50%; text-align: right; }
+            td:before { position: absolute; top: 12px; left: 10px; width: 45%; white-space: nowrap; text-align: left; font-weight: bold; content: attr(data-label); }
+        }

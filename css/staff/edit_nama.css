@@ -1,0 +1,130 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #f4f6f9;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #f8f9fa;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #0d47a1;
+    outline: none;
+}
+
+.btn {
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-blue {
+    background: #0d47a1;
+}
+
+.btn-red {
+    background: #c62828;
+}
+
+.btn-green {
+    background: #2e7d32;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Helper untuk form tambah unit */
+.add-unit-box {
+    background-color: #e8f5e9;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 5px solid #2e7d32;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.barcode-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;          /* WAJIB */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.barcode-modal.show {
+    display: flex;
+}
+
+.barcode-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.barcode-content img {
+    max-width: 100%;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+}
