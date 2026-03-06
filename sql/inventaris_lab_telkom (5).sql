@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2026 at 03:01 AM
+-- Generation Time: Mar 06, 2026 at 07:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -603,13 +603,24 @@ INSERT INTO `barang` (`id`, `nama_barang`, `nomor_unik`, `kondisi`) VALUES
 CREATE TABLE `jadwal_ruang` (
   `id` int(11) NOT NULL,
   `hari` enum('Senin','Selasa','Rabu','Kamis','Jumat') NOT NULL,
-  `jam_ke` varchar(20) NOT NULL COMMENT 'Contoh: 1-2',
+  `jam_ke` int(11) NOT NULL COMMENT 'Contoh: 1-2',
   `waktu_id` int(11) NOT NULL,
-  `kelas_id` int(11) NOT NULL,
-  `matkul_id` int(11) NOT NULL,
-  `ruang_id` int(11) NOT NULL,
-  `dosen_id` int(11) NOT NULL
+  `kelas_id` int(11) DEFAULT NULL,
+  `matkul_id` int(11) DEFAULT NULL,
+  `ruang_id` int(11) DEFAULT NULL,
+  `dosen_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jadwal_ruang`
+--
+
+INSERT INTO `jadwal_ruang` (`id`, `hari`, `jam_ke`, `waktu_id`, `kelas_id`, `matkul_id`, `ruang_id`, `dosen_id`) VALUES
+(7, 'Senin', 1, 1, 29, 8, 7, 5),
+(12, 'Rabu', 2, 1, 29, 8, 7, 5),
+(13, 'Senin', 2, 2, 29, 8, 7, 5),
+(14, 'Selasa', 1, 1, 29, 8, 7, 5),
+(18, 'Senin', 1, 1, NULL, NULL, 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -711,37 +722,31 @@ CREATE TABLE `peminjaman` (
 --
 
 INSERT INTO `peminjaman` (`id`, `user_id`, `kelas_id`, `nama_mahasiswa`, `matkul_id`, `barang_id`, `waktu_pinjam`, `tanggal_pinjam`, `waktu_kembali`, `tanggal_kembali`, `status_peminjaman`, `foto_ktm`, `created_at`, `ajaran_semester`) VALUES
-(1, NULL, 29, 'dymas', 8, 1876, '14:03:54', '2026-02-25', NULL, '2026-02-26 07:54:49', 'dipinjam', 'KTM_unknown_1772003034.jpg', '2026-02-25 07:03:54', '2027/2028 Ganjil'),
-(2, NULL, 29, 'dymas', 8, 1877, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(3, NULL, 29, 'dymas', 8, 1878, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(4, NULL, 29, 'dymas', 8, 1879, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(5, NULL, 29, 'dymas', 8, 1880, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(6, NULL, 29, 'dymas', 8, 1881, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(7, NULL, 29, 'dymas', 8, 1882, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(8, NULL, 29, 'dymas', 8, 1883, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(9, NULL, 29, 'dymas', 8, 1884, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(10, NULL, 29, 'dymas', 8, 1885, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(11, NULL, 29, 'dymas', 8, 1886, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(12, NULL, 29, 'dymas', 8, 1887, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(13, NULL, 29, 'dymas', 8, 1888, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(14, NULL, 29, 'dymas', 8, 1889, '07:58:17', '2026-02-26', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(15, NULL, 29, 'dymas', 8, 1890, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(16, NULL, 29, 'dymas', 8, 1891, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(17, NULL, 29, 'dymas', 8, 1892, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(18, NULL, 29, 'dymas', 8, 1893, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(19, NULL, 29, 'dymas', 8, 1894, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(20, NULL, 29, 'dymas', 8, 1895, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(21, NULL, 29, 'dymas', 8, 1896, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(22, NULL, 29, 'dymas', 8, 1897, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(23, NULL, 29, 'dymas', 8, 1898, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(24, NULL, 29, 'dymas', 8, 1899, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(25, NULL, 29, 'dymas', 8, 1900, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(26, NULL, 29, 'dymas', 8, 1901, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(27, NULL, 29, 'dymas', 8, 1902, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(28, NULL, 29, 'dymas', 8, 1903, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(29, NULL, 29, 'dymas', 8, 1904, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(30, NULL, 29, 'dymas', 8, 1905, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil'),
-(31, NULL, 29, 'dymas', 8, 1906, '07:58:17', '2026-02-26', NULL, NULL, 'dipinjam', 'KTM_unknown_1772067497.png', '2026-02-26 00:58:17', '2027/2028 Ganjil');
+(32, NULL, 29, 'dymas', 8, 1876, '09:03:06', '2026-03-02', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772416986.jpg', '2026-03-02 02:03:06', '2027/2028 Ganjil'),
+(33, NULL, 31, 'shidiq', 4, 1916, '10:00:04', '2026-03-02', NULL, '2026-03-02 11:44:10', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(34, NULL, 31, 'shidiq', 4, 1917, '10:00:04', '2026-03-02', NULL, '2026-03-02 11:44:10', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(35, NULL, 31, 'shidiq', 4, 1918, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(36, NULL, 31, 'shidiq', 4, 1919, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(37, NULL, 31, 'shidiq', 4, 1920, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(38, NULL, 31, 'shidiq', 4, 1921, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(39, NULL, 31, 'shidiq', 4, 1922, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(40, NULL, 31, 'shidiq', 4, 1923, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(41, NULL, 31, 'shidiq', 4, 1924, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(42, NULL, 31, 'shidiq', 4, 1925, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(43, NULL, 31, 'shidiq', 4, 1926, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:18', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(44, NULL, 31, 'shidiq', 4, 1177, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(45, NULL, 31, 'shidiq', 4, 1178, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(46, NULL, 31, 'shidiq', 4, 1179, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(47, NULL, 31, 'shidiq', 4, 1180, '10:00:04', '2026-03-02', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(48, NULL, 31, 'shidiq', 4, 1181, '10:00:04', '2026-03-02', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(49, NULL, 31, 'shidiq', 4, 1182, '10:00:04', '2026-03-02', NULL, NULL, 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(50, NULL, 31, 'shidiq', 4, 1183, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(51, NULL, 31, 'shidiq', 4, 1184, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(52, NULL, 31, 'shidiq', 4, 1185, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(53, NULL, 31, 'shidiq', 4, 1186, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(54, NULL, 31, 'shidiq', 4, 1187, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(55, NULL, 31, 'shidiq', 4, 1188, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil'),
+(56, NULL, 31, 'shidiq', 4, 1189, '10:00:04', '2026-03-02', NULL, '2026-03-02 10:13:39', 'dikembalikan', 'KTM_unknown_1772420404.jpg', '2026-03-02 03:00:04', '2027/2028 Ganjil');
 
 -- --------------------------------------------------------
 
@@ -754,6 +759,16 @@ CREATE TABLE `ruangan` (
   `ruang` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ruangan`
+--
+
+INSERT INTO `ruangan` (`id`, `ruang`) VALUES
+(5, 'Lab. TK Timur II/01'),
+(7, 'Lab. TK Timur I/01'),
+(10, 'Lab. TK Timur I/02'),
+(11, 'Lab. TK Timur II/02');
+
 -- --------------------------------------------------------
 
 --
@@ -763,6 +778,7 @@ CREATE TABLE `ruangan` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `nama_lengkap` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','dosen','super_admin') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -771,10 +787,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
-(5, 'Dosen', '$2y$10$lpSOG.HRuQrRrDyqZkWoxe7p5DXyqDX38dWawFrQWfJFx/s3nqdjG', 'dosen'),
-(6, 'admin123', '$2y$10$3ZoEzJdccGvcbHVu8/j93eRuXBPlwhjpvBFttesgXex6xHnhRSHtq', 'super_admin'),
-(10, 'Admin', '$2y$10$eeH2x1CvNbfvPaENhnxjIufa1syzGTBprTkyG8LH6p/KwaKJktBFu', 'admin');
+INSERT INTO `users` (`id`, `username`, `nama_lengkap`, `password`, `role`) VALUES
+(5, 'Dosen', 'Dosen Kece', '$2y$10$lpSOG.HRuQrRrDyqZkWoxe7p5DXyqDX38dWawFrQWfJFx/s3nqdjG', 'dosen'),
+(6, 'admin123', 'Administrator Sistem', '$2y$10$VevwtTfMAumlybcHv9bV1.bdre5kqzijQ0TSyfy44Frgt/gYGcHQS', 'super_admin'),
+(10, 'Admin', 'Admin Keren', '$2y$10$eeH2x1CvNbfvPaENhnxjIufa1syzGTBprTkyG8LH6p/KwaKJktBFu', 'admin');
 
 -- --------------------------------------------------------
 
@@ -784,8 +800,17 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 
 CREATE TABLE `waktu` (
   `id` int(11) NOT NULL,
+  `jam_ke` int(11) NOT NULL,
   `waktu` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `waktu`
+--
+
+INSERT INTO `waktu` (`id`, `jam_ke`, `waktu`) VALUES
+(1, 0, '07.00 - 08.00'),
+(2, 0, '08.00 - 09.00');
 
 --
 -- Indexes for dumped tables
@@ -832,7 +857,9 @@ ALTER TABLE `mata_kuliah`
 -- Indexes for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kelas_id` (`kelas_id`,`matkul_id`,`barang_id`),
+  ADD KEY `matkul_id` (`matkul_id`);
 
 --
 -- Indexes for table `ruangan`
@@ -851,8 +878,7 @@ ALTER TABLE `users`
 -- Indexes for table `waktu`
 --
 ALTER TABLE `waktu`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `waktu` (`waktu`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -874,7 +900,7 @@ ALTER TABLE `barang`
 -- AUTO_INCREMENT for table `jadwal_ruang`
 --
 ALTER TABLE `jadwal_ruang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `kelas`
@@ -892,13 +918,13 @@ ALTER TABLE `mata_kuliah`
 -- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `ruangan`
 --
 ALTER TABLE `ruangan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -910,7 +936,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `waktu`
 --
 ALTER TABLE `waktu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -925,6 +951,12 @@ ALTER TABLE `jadwal_ruang`
   ADD CONSTRAINT `jadwal_ruang_ibfk_3` FOREIGN KEY (`waktu_id`) REFERENCES `waktu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `jadwal_ruang_ibfk_4` FOREIGN KEY (`ruang_id`) REFERENCES `ruangan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `jadwal_ruang_ibfk_5` FOREIGN KEY (`dosen_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  ADD CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`matkul_id`) REFERENCES `mata_kuliah` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
