@@ -66,11 +66,11 @@
         document.getElementById('mini-ruang_id').value = data.ruang_id;
         document.getElementById('mini-dosen_id').value = data.dosen_id;
 
-        document.getElementById('miniEditPopup').style.display = 'block';
+        document.getElementById('miniEditPopup').classList.add('show');
     }
 
     function closeMiniPopup() {
-        document.getElementById('miniEditPopup').style.display = 'none';
+        document.getElementById('miniEditPopup').classList.remove('show');
     }
 
     window.addEventListener('click', function(e) {

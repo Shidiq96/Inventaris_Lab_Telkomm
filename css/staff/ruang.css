@@ -53,6 +53,12 @@
     background: rgba(0,0,0,0.4);
 }
 
+.mini-popup.show {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
 .mini-popup-content {
     background: white;
     width: 350px;
