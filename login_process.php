@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php else: ?>
         <!-- FORM LOGIN STAFF (DOSEN) -->
-        <h2>Login Admin/Dosen</h2>
+        <h2>Login Staff</h2>
         <?php if(isset($error_staff)) echo "<p class='error'>$error_staff</p>"; ?>
         <?php
         // Generate captcha untuk staff login
