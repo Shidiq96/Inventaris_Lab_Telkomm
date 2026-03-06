@@ -20,27 +20,28 @@ if (!isset($conn)) {
     die("Error: Koneksi Database Gagal.");
 }
 
-// 3. Ambil Data Jadwal (Join semua tabel untuk info lengkap)
-// Kita urutkan berdasarkan Hari, lalu Ruang, lalu Waktu agar mudah dibaca
- $query = "SELECT 
-            jr.hari, 
-            r.ruang, 
-            w.waktu, 
-            k.nama_kelas, 
-            m.nama_matkul, 
-            u.username as dosen 
+// 3. Ambil Data Ruangan (Untuk Grup Luar)
+ $ruang_arr = [];
+ $ruang_q = mysqli_query($conn, "SELECT * FROM ruangan ORDER BY ruang ASC");
+while ($row = mysqli_fetch_assoc($ruang_q)) { 
+    $ruang_arr[] = $row; 
+}
+
+// 4. Ambil Data Jadwal Lengkap (Query Update: Nama Lengkap)
+// Menggunakan LEFT JOIN agar data tetap muncul meskipun ada yang kosong
+ $query_jadwal = "SELECT jr.id, jr.hari, jr.jam_ke, jr.waktu_id, w.waktu, jr.kelas_id, jr.matkul_id, jr.ruang_id, jr.dosen_id, 
+                 k.nama_kelas, m.nama_matkul, r.ruang, COALESCE(d.nama_lengkap, d.username) as nama_dosen
           FROM jadwal_ruang jr
-          JOIN ruangan r ON jr.ruang_id = r.id
+          LEFT JOIN kelas k ON jr.kelas_id = k.id
+          LEFT JOIN mata_kuliah m ON jr.matkul_id = m.id
           JOIN waktu w ON jr.waktu_id = w.id
-          JOIN kelas k ON jr.kelas_id = k.id
-          JOIN mata_kuliah m ON jr.matkul_id = m.id
-          JOIN users u ON jr.dosen_id = u.id 
-          ORDER BY FIELD(jr.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'), r.ruang ASC, w.waktu ASC";
-
- $result = mysqli_query($conn, $query);
+          JOIN ruangan r ON jr.ruang_id = r.id
+          LEFT JOIN users d ON jr.dosen_id = d.id  
+          ORDER BY r.ruang ASC, FIELD(jr.hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'), jr.jam_ke ASC";
+          
+ $result_jadwal = mysqli_query($conn, $query_jadwal);
  $jadwal_arr = [];
-
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result_jadwal)) {
     $jadwal_arr[] = $row;
 }
 
@@ -54,141 +55,119 @@ while ($row = mysqli_fetch_assoc($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Lab - Mahasiswa</title>
     <style>
-        /* --- CSS STYLING (Konsisten dengan tampilan Admin) --- */
-        :root {
-            --primary-color: #009879; /* Warna utama hijau */
-            --secondary-color: #0d47a1; /* Warna biru untuk aksen */
-            --bg-light: #f4f7f6;
-            --text-dark: #333;
-            --border-color: #ddd;
+        /* --- CSS STYLING (Diadopsi dari jadwal_ruang.php) --- */
+        :root { 
+            --primary-color: #0d47a1; 
+            --secondary-color: #009879; 
+            --accent-color: #f39c12; 
+            --danger-color: #e74c3c; 
+            --bg-light: #f4f7f6; 
+            --text-dark: #333; 
+            --border-color: #ddd; 
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 20px;
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            margin: 0; 
+            padding: 20px; 
         }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
         }
-
-        h2 {
-            text-align: center;
-            color: var(--secondary-color);
-            border-bottom: 2px solid var(--bg-light);
-            padding-bottom: 15px;
-            margin-top: 0;
-            margin-bottom: 30px;
+        h2, h3 { 
+            color: var(--primary-color); 
+            border-bottom: 2px solid var(--bg-light); 
+            padding-bottom: 10px; 
+            margin-top: 0; 
         }
-
-        /* Tombol Kembali */
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background 0.3s;
+        .user-info { margin-bottom: 20px; text-align: right; }
+        .btn { 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: background 0.3s; 
+            display: inline-block; 
         }
-
-        .back-btn:hover {
-            background-color: #08306b;
+        .btn-blue { background-color: var(--primary-color); color: #fff; }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+            font-size: 14px; 
         }
-
-        /* Group Hari */
-        .hari-group {
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            overflow: hidden; /* Agar sudut tabel tidak tembus */
+        th, td { 
+            border: 1px solid var(--border-color); 
+            padding: 10px; 
+            text-align: left; 
         }
-
-        .hari-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        th { 
+            background-color: var(--primary-color); 
+            color: white; 
         }
-
-        /* Tabel */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: #f8f9fa;
-            color: #555;
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
         tr:hover { background-color: #e6f7ff; }
 
-        /* Responsif untuk HP */
-        @media (max-width: 768px) {
-            table, thead, tbody, th, td, tr { 
-                display: block; 
-            }
-            thead tr { 
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            tr { 
-                border: 1px solid #ccc; 
-                margin-bottom: 10px; 
-                border-radius: 5px;
-                padding: 10px;
-            }
-            td { 
-                border: none;
-                border-bottom: 1px solid #eee; 
-                position: relative;
-                padding-left: 50%; 
-            }
-            td:before { 
-                position: absolute;
-                top: 12px;
-                left: 10px;
-                width: 45%; 
-                padding-right: 10px; 
-                white-space: nowrap;
-                font-weight: bold;
-                color: var(--secondary-color);
-            }
-            
-            /* Label data saat di HP */
-            td:nth-of-type(1):before { content: "No"; }
-            td:nth-of-type(2):before { content: "Ruangan"; }
-            td:nth-of-type(3):before { content: "Waktu"; }
-            td:nth-of-type(4):before { content: "Kelas"; }
-            td:nth-of-type(5):before { content: "Mata Kuliah"; }
-            td:nth-of-type(6):before { content: "Dosen"; }
+        /* Struktur Grup (Sama dengan Admin) */
+        .ruang-group { 
+            margin-bottom: 40px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            background: #fff; 
+        }
+        .ruang-header { 
+            background: var(--primary-color); 
+            color: white; 
+            padding: 15px; 
+            font-weight: bold; 
+            font-size: 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        .hari-group { 
+            border-bottom: 1px solid #eee; 
+        }
+        .hari-group:last-child { 
+            border-bottom: none; 
+        }
+        .hari-header { 
+            background: #e3f2fd; 
+            color: var(--primary-color); 
+            padding: 10px 15px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            border-bottom: 2px solid var(--secondary-color); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
         }
         
+        .ruang-group table { 
+            margin: 0; 
+            border: none; 
+        }
+        .ruang-group table th { 
+            background-color: var(--secondary-color); 
+        }
+        .ruang-group table th, .ruang-group table td { 
+            border-bottom: 1px solid #eee; 
+            border-top: none; 
+            border-left: none; 
+            border-right: none; 
+        }
+
         .empty-state {
             text-align: center;
             color: #888;
@@ -200,64 +179,88 @@ while ($row = mysqli_fetch_assoc($result)) {
 <body>
 
 <div class="container">
-    <a href="dashboard.php" class="back-btn">← Kembali ke Dashboard</a>
-    
-    <h2>Jadwal Penggunaan Laboratorium</h2>
+    <div class="user-info"> 
+        <a href="dashboard.php" class="btn btn-blue">Kembali ke Dashboard</a>
+    </div>
 
-    <?php if (count($jadwal_arr) > 0) { ?>
+    <h2>Jadwal Penggunaan Ruang Lab</h2>
+
+    <!-- TAMPILAN JADWAL (STRUKTUR GRUP: RUANG > HARI > TABEL) -->
+    <?php 
+    // Loop 1: Group by Ruangan
+    foreach($ruang_arr as $ruang) { 
+        // Filter jadwal berdasarkan ID ruangan saat ini
+        $jadwal_ruang_ini = array_filter($jadwal_arr, function($item) use ($ruang) {
+            return $item['ruang_id'] == $ruang['id'];
+        });
         
-        <?php foreach($list_hari as $hari) { 
-            // Filter jadwal berdasarkan hari
-            $jadwal_hari = array_filter($jadwal_arr, function($row) use ($hari) {
-                return $row['hari'] === $hari;
-            });
-
-            // Hanya tampilkan grup hari jika ada jadwalnya
-            if (count($jadwal_hari) > 0) {
-        ?>
-            <div class="hari-group">
-                <div class="hari-header">
-                    <span>Hari <?= $hari; ?></span>
-                    <span style="font-size: 0.8em; font-weight: normal; opacity: 0.8;">
-                        <?= count($jadwal_hari); ?> Jadwal
-                    </span>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th width="5%">No</th>
-                            <th width="15%">Ruangan</th>
-                            <th width="20%">Waktu</th>
-                            <th width="15%">Kelas</th>
-                            <th width="30%">Mata Kuliah</th>
-                            <th width="15%">Dosen Pengampu</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        // Reset index array agar nomor urut mulai dari 1 setiap hari
-                        foreach(array_values($jadwal_hari) as $index => $row) { 
-                        ?>
-                        <tr>
-                            <td><?= $index + 1; ?></td>
-                            <td>
-                                <strong><?= htmlspecialchars($row['ruang']); ?></strong>
-                            </td>
-                            <td><?= htmlspecialchars($row['waktu']); ?></td>
-                            <td><span style="background:#e0f7fa; color:#006064; padding:2px 6px; border-radius:4px; font-size:12px;"><?= htmlspecialchars($row['nama_kelas']); ?></span></td>
-                            <td><?= htmlspecialchars($row['nama_matkul']); ?></td>
-                            <td><?= htmlspecialchars($row['dosen']); ?></td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php 
-            } 
-        } 
+        // Hanya tampilkan jika ada jadwal di ruangan tersebut
+        if (count($jadwal_ruang_ini) > 0) {
     ?>
-    
-    <?php } else { ?>
+        <div class="ruang-group">
+            <!-- Header Ruang (Biru Tua) -->
+            <div class="ruang-header">
+                <span>Jadwal: Lab. <?= htmlspecialchars($ruang['ruang']); ?></span>
+            </div>
+
+            <?php 
+            // Loop 2: Group by Hari di dalam Ruangan
+            $jadwal_per_hari = [];
+            foreach($jadwal_ruang_ini as $j) {
+                $jadwal_per_hari[$j['hari']][] = $j;
+            }
+
+            foreach($list_hari as $hari) {
+                // Cek apakah ada jadwal di hari ini
+                if (isset($jadwal_per_hari[$hari])) {
+            ?>
+                <!-- Header Hari (Biru Muda) -->
+                <div class="hari-group">
+                    <div class="hari-header"><?= $hari; ?></div>
+                    
+                    <!-- Loop 3: Isi Tabel -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="10%">Jam Ke</th>
+                                <th width="15%">Waktu</th>
+                                <th width="15%">Kelas</th>
+                                <th width="40%">Mata Kuliah</th>
+                                <th width="20%">Dosen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            foreach($jadwal_per_hari[$hari] as $row) { 
+                                // Tampil "-" jika data kosong
+                                $disp_kelas = $row['nama_kelas'] ?: '-';
+                                $disp_matkul = $row['nama_matkul'] ?: '-';
+                                $disp_dosen = $row['nama_dosen'] ?: '-';
+                            ?>
+                            <tr>
+                                <td><strong><?= htmlspecialchars($row['jam_ke']); ?></strong></td>
+                                <td><?= htmlspecialchars($row['waktu']); ?></td>
+                                <td><?= htmlspecialchars($disp_kelas); ?></td>
+                                <td><?= htmlspecialchars($disp_matkul); ?></td>
+                                <!-- Kolom Dosen menggunakan Nama Lengkap -->
+                                <td><?= htmlspecialchars($disp_dosen); ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div> 
+            <?php 
+                } // End if isset hari
+            } // End foreach hari
+            ?>
+        </div> 
+    <?php 
+        } // End if count ruang
+    } // End foreach ruang
+    ?>
+
+    <!-- Pesan jika tidak ada jadwal -->
+    <?php if (count($jadwal_arr) == 0) { ?>
         <div class="empty-state">
             Belum ada jadwal penggunaan laboratorium yang tersedia.
         </div>

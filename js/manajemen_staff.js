@@ -1,6 +1,7 @@
     function openEditModal(data) {
         document.getElementById('edit_id').value = data.id;
         document.getElementById('edit_username').value = data.username;
+        document.getElementById('edit_nama_lengkap').value = data.nama_lengkap;
         document.getElementById('edit_role').value = data.role;
         document.getElementById('edit_pass').value = '';
         document.getElementById('editModal').style.display = "flex";

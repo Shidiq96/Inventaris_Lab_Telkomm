@@ -27,11 +27,12 @@ if (!isset($conn)) {
 // --- 3. LOGIKA: TAMBAH STAFF BARU ---
 if (isset($_POST['tambah_staff'])) {
     $user = $conn->real_escape_string($_POST['username']);
+    $nama_lengkap = $conn->real_escape_string($_POST['nama_lengkap']);
     $pass = $_POST['password'];
     $role = $conn->real_escape_string($_POST['role']);
 
     // Validasi input kosong
-    if (empty($user) || empty($pass) || empty($role)) {
+    if (empty($user) || empty($nama_lengkap) || empty($pass) || empty($role)) {
         $error_msg = "Semua kolom wajib diisi!";
     } else {
         // Cek apakah username sudah terpakai
@@ -42,7 +43,7 @@ if (isset($_POST['tambah_staff'])) {
             // Enkripsi Password
             $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
             
-            $sql = "INSERT INTO users (username, password, role) VALUES ('$user', '$pass_hash', '$role')";
+            $sql = "INSERT INTO users (username, nama_lengkap, password, role) VALUES ('$user', '$nama_lengkap', '$pass_hash', '$role')";
             
             if ($conn->query($sql)) {
                 $success_msg = "Staff baru ($role) berhasil ditambahkan.";
@@ -57,17 +58,18 @@ if (isset($_POST['tambah_staff'])) {
 if (isset($_POST['edit_staff'])) {
     $id = intval($_POST['id']);
     $user_baru = $conn->real_escape_string($_POST['username']); // PASTIKAN HTML NAME ADALAH 'username'
+    $nama_lengkap_baru = $conn->real_escape_string($_POST['nama_lengkap']);
     $role = $conn->real_escape_string($_POST['role']);
     $pass_baru = $_POST['password'];
 
-    if (empty($user_baru) || empty($role)) {
-        $error_msg = "Username dan Role wajib diisi.";
+    if (empty($user_baru) || empty($nama_lengkap_baru) || empty($role)) {
+        $error_msg = "Username, Nama Lengkap, dan Role wajib diisi.";
     } else {
         if (!empty($pass_baru)) {
             $pass_hash = password_hash($pass_baru, PASSWORD_DEFAULT);
-            $sql = "UPDATE users SET username='$user_baru', role='$role', password='$pass_hash' WHERE id='$id'";
+            $sql = "UPDATE users SET username='$user_baru', nama_lengkap='$nama_lengkap_baru', role='$role', password='$pass_hash' WHERE id='$id'";
         } else {
-            $sql = "UPDATE users SET username='$user_baru', role='$role' WHERE id='$id'";
+            $sql = "UPDATE users SET username='$user_baru', nama_lengkap='$nama_lengkap_baru', role='$role' WHERE id='$id'";
         }
 
         if ($conn->query($sql)) {
@@ -128,6 +130,7 @@ if (isset($_GET['hapus'])) {
             <div class="row">
                 <!-- Pastikan name disini adalah 'username' -->
                 <input type="text" name="username" placeholder="Username" required style="flex:2;">
+                <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" required style="flex:3; margin-left:10px;">
                 <input type="password" name="password" placeholder="Password" required style="flex:1;">
                 <select name="role" required style="flex:1;">
                     <option value="">Pilih Role</option>
@@ -147,6 +150,7 @@ if (isset($_GET['hapus'])) {
                 <tr>
                     <th width="40">No</th>
                     <th>Username</th>
+                    <th>Nama Lengkap</th>
                     <th width="100">Role</th>
                     <th width="150" style="text-align:center;">Aksi</th>
                 </tr>
@@ -161,6 +165,7 @@ if (isset($_GET['hapus'])) {
                 <tr>
                     <td><?= $no++ ?></td>
                     <td><strong><?= htmlspecialchars($row['username']) ?></strong></td>
+                    <td><?= htmlspecialchars($row['nama_lengkap']) ?></td>
                     <td><?= $role_badge ?></td>
                     <td style="text-align:center;">
                         <button type="button" onclick="openEditModal(<?= htmlspecialchars(json_encode($row)) ?>)" class="btn btn-blue btn-small"><i class="fas fa-edit"></i> Edit</button>
@@ -185,6 +190,9 @@ if (isset($_GET['hapus'])) {
                 <label>Username</label>
                 <input type="text" name="username" id="edit_username" required>
             </div>
+            <div class="form-group-modal">
+                <label>Nama Lengkap</label>
+                <input type="text" name="nama_lengkap" id="edit_nama_lengkap" required>
             <div class="form-group-modal">
                 <label>Role</label>
                 <select name="role" id="edit_role">

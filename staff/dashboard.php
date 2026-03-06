@@ -301,7 +301,7 @@ if (isset($_GET['kembalikan_secepat'])) {
     <div class="header">
         <h2>Dashboard Staff</h2>
         <div>
-            <span>Halo, <strong><?= $_SESSION['user']['username'] ?></strong> (<?= $_SESSION['user']['role'] ?>)</span>
+            <span>Halo, <strong><?= $_SESSION['user']['nama_lengkap'] ?></strong> (<?= $_SESSION['user']['role'] ?>)</span>
 
             <a href="edit_profil.php" class="btn btn-blue" style="margin-left: 10px;">
                 <i class="fas fa-user-edit"></i> Edit Profil
