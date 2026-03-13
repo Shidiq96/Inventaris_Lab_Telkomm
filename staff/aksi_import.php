@@ -34,16 +34,16 @@ if(isset($_POST['submit'])){
         
 for($i=1;$i<count($sheetData);$i++){
 
-    $barang_id       = $sheetData[$i][1] ?? '';
-    $nama_barang     = $sheetData[$i][2] ?? '';
-    $nomor_unik      = $sheetData[$i][3] ?? '';
-    $nama_kelas      = $sheetData[$i][4] ?? '';
-    $nama_matkul     = $sheetData[$i][5] ?? '';
-    $nama_mahasiswa  = $sheetData[$i][6] ?? '';
-    $ajaran_semester = $sheetData[$i][7] ?? '';
+    $barang_id       = $sheetData[$i][0] ?? '';
+    $nama_barang     = $sheetData[$i][1] ?? '';
+    $nomor_unik      = $sheetData[$i][2] ?? '';
+    $nama_kelas      = $sheetData[$i][3] ?? '';
+    $nama_matkul     = $sheetData[$i][4] ?? '';
+    $nama_mahasiswa  = $sheetData[$i][5] ?? '';
+    $ajaran_semester = $sheetData[$i][6] ?? '';
 
-    $raw_tgl = $sheetData[$i][8] ?? '';
-    $raw_wkt = $sheetData[$i][9] ?? '';
+    $raw_tgl = $sheetData[$i][7] ?? '';
+    $raw_wkt = $sheetData[$i][8] ?? '';
 
     $tanggal_pinjam = (!empty($raw_tgl)) ? date('Y-m-d', strtotime($raw_tgl)) : NULL;
     $waktu_pinjam   = (!empty($raw_wkt)) ? date('H:i:s', strtotime($raw_wkt)) : NULL;

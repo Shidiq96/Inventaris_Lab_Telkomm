@@ -297,6 +297,13 @@ foreach ($jadwal_arr as $idx1 => $row1) {
         <?php if ($allow_edit) { ?>
             <a href="manajemen_data.php" class="btn" style="background-color: #607d8b; color: white;">⚙️ Atur Ruangan & Waktu</a>
         <?php } ?>
+
+        <a href="export_jadwal_ruang.php" class="btn" style="background-color: #4caf50; color: white;">📥 Export ke Excel (.csv)</a>
+
+        <a href="import_jadwal_excel.php" target="_blank">
+            <button class="btn" style="background-color: #e67e22; color: white;">📤 Import dari Excel</button>
+        </a>
+
     </div>
 
     <!-- Form Input Utama -->
